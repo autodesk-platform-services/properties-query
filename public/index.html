@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Specific Properties</title>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="https://github.com/Autodesk-Forge/learn.forge.viewmodels/raw/master/img/favicon.ico">
+  <!-- Common packages: jQuery, Bootstrap, jsTree -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.7/jstree.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.7/themes/default/style.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+  <!-- Autodesk Forge Viewer files -->
+  <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
+  <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+  
+ 
+  <!-- this project files -->
+  <link href="css/main.css" rel="stylesheet" />
+  <script src="js/customproperties.js"></script>
+  <script src="js/ForgeTree.js"></script>
+  <script src="js/ForgeViewer.js"></script>
+
+  <script src="/jquery.json-viewer.js"></script>
+  <link href="/jquery.json-viewer.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Fixed navbar by Bootstrap: https://getbootstrap.com/examples/navbar-fixed-top/ -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav left">
+        <li>
+          <a href="http://developer.autodesk.com" target="_blank">
+            <img alt="Autodesk Forge" src="//developer.static.autodesk.com/images/logo_forge-2-line.png" height="20">
+          </a>
+        </li>
+      </ul>
+      <p style="font-size: 26px;margin: 10px;margin-left: 40%;">Specific Properties API Demo</p>
+    </div>
+  </nav>
+  <!-- End of navbar -->
+  <div class="container-fluid fill">
+    <div class="row fill">
+      <div class="col-sm-6 fill">
+        <div id="forgeViewer"></div>
+      </div>
+      <div style="padding: 10px 40px;" class="col-sm-6 fill">
+        <div class="loader"></div>
+        <div id="customproperties">
+          <p style="font-weight: bold;">With this new <a target="_blank" href="https://forge.autodesk.com/en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/">Specific Properties API</a>, one can fetch specific properties of object(s) with multiple types of filters.</p>
+          <div>
+            <span style="font-weight: bold;">Type of Filter:</span>
+            <select  class="filtertype" >
+              <option >select an option</option>
+              <option value="objectid">objectid</option>
+              <option value="externalId">externalId</option>
+              <option value="prefix">prefix (name)</option>
+              <option value="eq">equals to</option>
+              <option value="between">between</option>
+              <option value="le">less than or equal to</option>
+              <option value="ge">greater than or equal to</option>
+              <option value="contains">contains</option>
+            </select>
+            <i class="fas fa-info-circle details" data-toggle="modal" data-target="#myModal" data-original-title="Filter Details" title=""></i>
+          </div>   
+
+          <div class="filter_content">
+            <div>
+              <span class="type_label" style="font-weight: bold;"></span>
+              <input class="type_input" type="text">
+              <span class="example" style="font-weight: bold;"></span>              
+            </div>
+            <button class="fetch btn btn-primary">Fetch Properties</button>
+            <!-- <pre class="outputlog"  style="height: calc(60vh - 15px);; overflow-y: scroll;"></pre> -->
+            <div class="api-details">
+              <button class="showrequest btn btn-primary">Show Request</button>
+              <pre id="request"></pre>
+              <pre id="response"></pre>
+            </div>
+          </div>  
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Filter Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-section"><table><thead></thead><tbody><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">objectid<br> Or<br> externalId</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects with their <code class="docutils literal notranslate"><span class="pre">objectid</span></code> or <code class="docutils literal notranslate"><span class="pre">externalId</span></code> attribute exactly matching one of the values specified in the array.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the attribute to match (<code class="docutils literal notranslate"><span class="pre">objectid</span></code> or <code class="docutils literal notranslate"><span class="pre">externalId</span></code>). Subsequent elements contain the values to match.</div>
+          <div class="line"><br></div>
+          <div class="line">For example, if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$in":["objectid",1,2]</span></code>, the request will only return the properties of the objects with <code class="docutils literal notranslate"><span class="pre">objectid</span></code> 1 and 2. If you specify an array as <code class="docutils literal notranslate"><span class="pre">"$in":["externalId","doc_982afc8a","doc_afd75233"</span> <span class="pre">]</span></code> the request will only return the properties of the objects with <code class="docutils literal notranslate"><span class="pre">extermnalId</span></code> doc_982afc8a and doc_afd75233.</div>
+          <div class="line"><br></div>
+          </div>
+          </td></tr><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">prefix</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects with their <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute beginning with the specified string.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the attribute to match (<code class="docutils literal notranslate"><span class="pre">name</span></code>). The second element contains the string to match. The array can have only two elements. Only the objects whose name begin with the specified string are returned.</div>
+          </div>
+          </td></tr><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">equals to</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects where the value of the specified attribute (<code class="docutils literal notranslate"><span class="pre">name</span></code> attribute or any numerical property) is exactly equal to the specified value.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the attribute. This can be the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute or the name of a numerical property. The second element of the array must be the value to match. If the first element is <code class="docutils literal notranslate"><span class="pre">name</span></code>, must be a string value. If the first element is a numerical property, must be a numeric. The array can only be two elements long.</div>
+          <div class="line"><br></div>
+          <div class="line">For example, if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$eq":["name","Rectangular"]</span></code>, the request will only return the properties of the object named <code class="docutils literal notranslate"><span class="pre">Rectangular</span></code>. if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$eq":["properties.Dimensions.Width1",0.6]</span></code>, the request will return the properties of all objects whose <code class="docutils literal notranslate"><span class="pre">properties.Dimensions.Width1</span></code> property is exactly equal to <code class="docutils literal notranslate"><span class="pre">0.6</span></code>.</div>
+          <div class="line"><br></div>
+          <div class="line"><strong>Note:</strong> The value to compare must be specified in the system unit of that property. For example, if the system unit of the property is <code class="docutils literal notranslate"><span class="pre">m</span></code>, the value must be specified in <code class="docutils literal notranslate"><span class="pre">m</span></code>, and not in <code class="docutils literal notranslate"><span class="pre">cm</span></code>.</div>
+          </div>
+          </td></tr><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">between</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects where the value of the specified numerical property lies between the specified values.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the property. The next two elements specify the values that the property must lie between. The array can only be three elements long.</div>
+          <div class="line"><br></div>
+          <div class="line">For example, if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$between":["properties.Dimensions.Width1",1,10]</span></code>, the request returns the properties of all objects whose <code class="docutils literal notranslate"><span class="pre">properties.Dimensions.Width1</span></code> property is between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">10</span></code>.</div>
+          <div class="line"><br></div>
+          <div class="line"><strong>Note:</strong> The value to compare must be specified in the system unit of that property. For example, if the system unit of the property is <code class="docutils literal notranslate"><span class="pre">m</span></code>, the value must be specified in <code class="docutils literal notranslate"><span class="pre">m</span></code>, and not in <code class="docutils literal notranslate"><span class="pre">cm</span></code>.</div>
+          </div>
+          </td></tr><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">less than or<br>equal to</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects where the value of the specified numerical property is less than or equal to the specified value.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the property. The next element specifies the values that the property must be less than or equal to. The array can only be two elements long.</div>
+          <div class="line"><br></div>
+          <div class="line">For example, if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$le":["properties.Dimensions.Width1",10]</span></code>, the request returns the properties of all objects whose <code class="docutils literal notranslate"><span class="pre">properties.Dimensions.Width1</span></code> property is less than or equal to <code class="docutils literal notranslate"><span class="pre">10</span></code>.</div>
+          <div class="line"><br></div>
+          <div class="line"><strong>Note:</strong> The value to compare must be specified in the system unit of that property. For example, if the system unit of the property is <code class="docutils literal notranslate"><span class="pre">m</span></code>, the value must be specified in <code class="docutils literal notranslate"><span class="pre">m</span></code>, and not in <code class="docutils literal notranslate"><span class="pre">cm</span></code>.</div>
+          </div>
+          </td></tr><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">greater than or <br> equal to</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects where the value of the specified numerical property is greater than or equal to the specified value.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the property. The next element specifies the values that the property must be greater than or equal to. The array can only be two elements long.</div>
+          <div class="line"><br></div>
+          <div class="line">For example, if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$ge":["properties.Dimensions.Width1",0.1]</span></code>, the request returns the properties of all objects whose <code class="docutils literal notranslate"><span class="pre">properties.Dimensions.Width1</span></code> property is greater than or equal to  <code class="docutils literal notranslate"><span class="pre">0.1</span></code>.</div>
+          <div class="line"><br></div>
+          <div class="line"><strong>Note:</strong> The value to compare must be specified in the system unit of that property. For example, if the system unit of the property is <code class="docutils literal notranslate"><span class="pre">m</span></code>, the value must be specified in <code class="docutils literal notranslate"><span class="pre">m</span></code>, and not in <code class="docutils literal notranslate"><span class="pre">cm</span></code>.</div>
+          </div>
+          </td></tr><tr class="level--3 row-collapsable--show"><td><i class="icon-collapsable--empty"></i><span class="name">contains</span></td><td><div class="line-block">
+          <div class="line">Returns only the objects where the value of the specified property contains the words specified in a string.</div>
+          <div class="line"><br></div>
+          <div class="line">The first element of the array contains the name of the property. The second element contains a string containing the words to match. The array can only be two elements long.</div>
+          <div class="line"><br></div>
+          <div class="line">For example, if you specify an array as: <code class="docutils literal notranslate"><span class="pre">"$contains":["properties.Materials</span> <span class="pre">and</span> <span class="pre">Finishes.Structural</span> <span class="pre">Material","Concrete</span> <span class="pre">Situ"]</span></code>, the request returns the properties of all objects whose <code class="docutils literal notranslate"><span class="pre">properties.Materials</span> <span class="pre">and</span> <span class="pre">Finishes.Structural</span> <span class="pre">Material</span></code> property contains the words  <code class="docutils literal notranslate"><span class="pre">Concrete</span></code> and <code class="docutils literal notranslate"><span class="pre">Situ</span></code>. You can specify up to 50 words.</div>
+          </div>
+          </td></tr><tr class="level--1"><td><i class="icon-collapsable--empty"></i><span class="name">fields</span><div class="type type--collapsable">object</div></td><td><div class="line-block">
+          <div class="line">Specifies what properties of the objects to return. If you do not specify this attribute, the response returns all properties.</div>
+          <div class="line"><br></div>
+          <div class="line">Possible values:</div>
+          </div>
+          <blockquote>
+          <div><table class="docutils align-default">
+          <thead>
+          <tr class="row-odd"><th class="head">Value</th>
+          <th class="head"><p>Meaning</p></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">properties</span></code></td>
+          <td>Return all properties.</td>
+          </tr>
+          <tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">properties.something</span></code></td>
+          <td>Return the property named <code class="docutils literal notranslate"><span class="pre">something</span></code> and all its children.</td>
+          </tr>
+          <tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">properties.some*</span></code></td>
+          <td>Return all properties with names that begin with <code class="docutils literal notranslate"><span class="pre">some</span></code> and all their children.</td>
+          </tr>
+          <tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">properties.category.*</span></code></td>
+          <td>Return the property named <code class="docutils literal notranslate"><span class="pre">category</span></code> and all its children.</td>
+          </tr>
+          <tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">properties.*.property</span></code></td>
+          <td>Return any property named <code class="docutils literal notranslate"><span class="pre">property</span></code> regardless of its parent.</td>
+          </tr>
+          </tbody>
+          </table>
+          </div></blockquote>
+          </td></tr><tr class="level--1"><td><i class="icon-collapsable--empty"></i><span class="name">payload</span><div class="type type--collapsable">enum</div></td><td><div class="line-block">
+          <div class="line">Specifies the format for numeric values in the response body. Possible values:</div>
+          <div class="line"><br></div>
+          <div class="line">- <strong>text</strong> - (Default) Returns all properties requested in <code class="docutils literal notranslate"><span class="pre">fields</span></code> without applying any special formatting.</div>
+          <div class="line">- <strong>unit</strong> - Applies a filter and returns only the properties that contain numerical values. Additionally, it formats property values as <code class="docutils literal notranslate"><span class="pre">##&lt;VALUE_OF_PROPERTY&gt;&lt;UNIT_OF_VALUE&gt;&lt;PRECISION&gt;&lt;SYSTEM_UNIT&gt;</span></code>. For example <code class="docutils literal notranslate"><span class="pre">##94.172{mm}[3]{m}</span></code>, where <code class="docutils literal notranslate"><span class="pre">94.172</span></code> is the value of the property, <code class="docutils literal notranslate"><span class="pre">{mm}</span></code> is the unit of the value, <code class="docutils literal notranslate"><span class="pre">[3]</span></code> is the precision, and <code class="docutils literal notranslate"><span class="pre">{m}</span></code> is the system unit.</div>
+          </div>
+          </td></tr></tbody></table><div class="text-required">* Required</div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>
