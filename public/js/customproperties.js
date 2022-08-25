@@ -36,8 +36,8 @@ $(document).ready(function () {
                 $('.example').text('eg: ')
                 break;
             case 'contains':
-                $('.type_label').text('')
-                $('.example').text('eg: ')
+                $('.type_label').text('property name and value')
+                $('.example').text('eg: properties.Constraints.Base Level,Top of Roof')
                 break;
         
             default:
@@ -95,7 +95,8 @@ $(document).ready(function () {
             
             break;
         case 'contains':
-            
+            let cr = data.split(',')
+            body.query = {"$contains": cr}
             break;
     
         default:
