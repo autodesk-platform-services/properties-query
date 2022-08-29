@@ -102,7 +102,7 @@ $(document).ready(function () {
         default:
             break;
     }
-    let request = { data: body,url: `https://developer.api.autodesk.com/modelderivative/v2/designdata/${urn}/metadata/${guid}/properties:query`}
+    let request = {url: `https://developer.api.autodesk.com/modelderivative/v2/designdata/${urn}/metadata/${guid}/properties:query`, data: body}
     let res
     let response = await fetch(
         '/api/forge/modelderivative/specificproperties',

@@ -12,7 +12,7 @@
 
 # Description
 
-This sample shows the capabilities of [Specific Properties API](https://forge.autodesk.com/en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/).
+This sample shows the capabilities of [Properties Query API](https://forge.autodesk.com/en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/).
 
 # Setup
 
@@ -24,7 +24,9 @@ Install [NodeJS](https://nodejs.org).
 
 Clone this project or download it. It's recommended to install [GitHub Desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone -b nodejs https://github.com/libvarun/specific.properties.git
+    git clone -b nodejs https://github.com/libvarun/properties.query.git
+
+Translate the file given in the sample_file folder and change the urn and guid in [customproperties.js](https://github.com/libvarun/properties.query/blob/master/public/js/customproperties.js#L56)
 
 To run it, install the required packages, set the enviroment variables with your client ID & Secret and finally start it. Via command line, navigate to the folder where this repository was cloned to and use the following commands:
 
