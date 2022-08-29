@@ -1,4 +1,4 @@
-# Specific Properties
+# Properties Query
 
 ![Node.js](https://img.shields.io/badge/node-%3E%3D%2010.0.0-brightgreen.svg)
 ![Platforms](https://img.shields.io/badge/platform-windows%20%7C%20osx%20%7C%20linux-lightgray.svg)
