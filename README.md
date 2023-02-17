@@ -24,7 +24,7 @@ Install [NodeJS](https://nodejs.org).
 
 Clone this project or download it. It's recommended to install [GitHub Desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone -b nodejs https://github.com/autodesk-platform-services/properties-query.git
+    git clone https://github.com/autodesk-platform-services/properties-query.git
 
 Translate the file given in the sample_file folder and change the urn and guid in [customproperties.js](https://github.com/autodesk-platform-services/properties-query/blob/master/public/js/customproperties.js#L56)
 
