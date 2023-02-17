@@ -36,7 +36,6 @@ app.get('/jquery.json-viewer.css', function(req, res) {
     res.sendFile(__dirname + '/node_modules/jquery.json-viewer/json-viewer/jquery.json-viewer.css');
 });
 app.use('/api/forge/oauth', require('./routes/oauth'));
-app.use('/api/forge/oss', require('./routes/oss'));
 app.use('/api/forge/modelderivative', require('./routes/modelderivative'));
 app.use((err, req, res, next) => {
     console.error(err);

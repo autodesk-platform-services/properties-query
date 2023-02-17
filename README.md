@@ -46,6 +46,8 @@ Windows (use **Node.js command line** from the Start menu)
 
 Open the browser: [http://localhost:3000](http://localhost:3000).
 
+> For simplicity urn is hard coded in main.js, please replace it with your urn.
+
 ## Packages used
 
 The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages are included by default. Some other non-Autodesk packages are used, including [express](https://www.npmjs.com/package/express) and [multer](https://www.npmjs.com/package/multer) for upload.

@@ -9,9 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.0",
-    "forge-apis": "^0.8.0",
+    "forge-apis": "^0.9.5",
     "jquery.json-viewer": "^1.5.0",
-    "multer": "^1.4.0",
     "node-fetch": "^3.2.10"
   }
 }
