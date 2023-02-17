@@ -12,11 +12,11 @@
 
 # Description
 
-This sample shows the capabilities of [Properties Query API](https://forge.autodesk.com/en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/).
+This sample shows the capabilities of [Properties Query API](https://aps.autodesk.com/en/docs/model-derivative/v2/reference/http/metadata/urn-metadata-guid-properties-query-POST/).
 
 # Setup
 
-To use this sample, you will need Autodesk developer credentials. Visit the [Forge Developer Portal](https://developer.autodesk.com), sign up for an account, then [create an app](https://developer.autodesk.com/myapps/create). For this new app, use **http://localhost:3000/api/forge/callback/oauth** as the Callback URL, although it is not used on a 2-legged flow. Finally, take note of the **Client ID** and **Client Secret**.
+To use this sample, you will need Autodesk developer credentials. Visit the [APS Developer Portal](https://developer.autodesk.com), sign up for an account, then [create an app](https://developer.autodesk.com/myapps/create). For this new app, use **http://localhost:3000/api/aps/callback/oauth** as the Callback URL, although it is not used on a 2-legged flow. Finally, take note of the **Client ID** and **Client Secret**.
 
 ### Run locally
 
@@ -24,24 +24,24 @@ Install [NodeJS](https://nodejs.org).
 
 Clone this project or download it. It's recommended to install [GitHub Desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone -b nodejs https://github.com/libvarun/properties.query.git
+    git clone -b nodejs https://github.com/autodesk-platform-services/properties-query.git
 
-Translate the file given in the sample_file folder and change the urn and guid in [customproperties.js](https://github.com/libvarun/properties.query/blob/master/public/js/customproperties.js#L56)
+Translate the file given in the sample_file folder and change the urn and guid in [customproperties.js](https://github.com/autodesk-platform-services/properties-query/blob/master/public/js/customproperties.js#L56)
 
 To run it, install the required packages, set the enviroment variables with your client ID & Secret and finally start it. Via command line, navigate to the folder where this repository was cloned to and use the following commands:
 
 Mac OSX/Linux (Terminal)
 
     npm install
-    export FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
-    export FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
+    export APS_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
+    export APS_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     npm start
 
 Windows (use **Node.js command line** from the Start menu)
 
     npm install
-    set FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
-    set FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
+    set APS_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
+    set APS_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     npm start
 
 Open the browser: [http://localhost:3000](http://localhost:3000).
@@ -50,7 +50,7 @@ Open the browser: [http://localhost:3000](http://localhost:3000).
 
 ## Packages used
 
-The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages are included by default. Some other non-Autodesk packages are used, including [express](https://www.npmjs.com/package/express) and [multer](https://www.npmjs.com/package/multer) for upload.
+The [Autodesk APS](https://www.npmjs.com/package/forge-apis) packages are included by default. Some other non-Autodesk packages are used, including [express](https://www.npmjs.com/package/express).
 
 # Tips & tricks
 
@@ -77,4 +77,4 @@ Please see the [LICENSE](LICENSE) file for full details.
 
 ## Written by
 
-Varun Patil [@varun.patil578](https://twitter.com/varun.patil578), [Forge Partner Development](http://forge.autodesk.com)
+Varun Patil [@varun.patil578](https://twitter.com/varun.patil578), [APS Partner Development](http://aps.autodesk.com)
